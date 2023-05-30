@@ -5,9 +5,16 @@ import Register from "./componentss/register/Register";
 import {  Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import { useContext } from "react";
+import axios from "axios";
+
+
+
+
+axios.defaults.withCredentials = true;
 export const URL = process.env.REACT_APP_SERVER_URL
 
 function App() {
+
  const {user} = useContext(AuthContext)
    return(
      
