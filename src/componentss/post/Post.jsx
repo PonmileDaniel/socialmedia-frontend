@@ -1,5 +1,5 @@
 import  './post.css'
-import { MoreVert } from '@material-ui/icons'
+import { Delete, MoreVert } from '@material-ui/icons'
 import { useState, useEffect, useContext} from 'react'
 import axios from "axios"
 import {format} from "timeago.js"
@@ -10,7 +10,11 @@ import { URL } from '../../App'
 export default function Post({ post }) {
  const [like,setlike] = useState(post.likes.length)
  const [islike,setislike] = useState(false)
+
  //This is to handle each user of the Post
+ const [menuOpen, setMenuopen] = useState(false);
+
+ //To handle the delete open and Close 
  const [user, setUser] = useState({});
 
  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -19,6 +23,7 @@ export default function Post({ post }) {
 const {user:currentUser} = useContext(AuthContext);
 
 //
+
 useEffect(() =>{
   setislike(post.likes.includes(currentUser._id))
 }, [currentUser._id,post.likes]);
@@ -43,10 +48,29 @@ const likeHandler = ()=>{
   try{
     axios.put(`${URL}/post/` + post._id+ "/like" , {userId:currentUser._id});
   }
-  catch(err){}
+  catch(err){
+    console.log(err)
+  }
   setlike(islike ? like - 1 : like + 1)
   setislike(!islike )
 };
+
+
+const handleDelete = async () => {
+  try {
+    await axios.delete(`${URL}/post/${post._id}`, {
+      data: { userId: currentUser._id },
+    });
+    console.log('Post has been deleted');
+    window.location.reload();
+    // Perform any necessary actions after deleting the post
+  } catch (error) {
+    console.log(error);
+    // Handle the error here
+  }
+};
+
+
 
 
   return (
@@ -65,7 +89,10 @@ const likeHandler = ()=>{
         <span className="postDate"> {format(post.createdAt)}</span>
         </div>
         <div className="postTopRight">
-            <MoreVert/>
+            <MoreVert onClick={() => setMenuopen(!menuOpen)}/>
+            {/* {menuOpen && <button onClick={handleDelete}>Delete</button>} */}
+           { menuOpen &&     <Delete onClick={handleDelete}/>}
+
         </div>
         </div>
         <div className="postCenter">

@@ -4,6 +4,7 @@ import "./register.css"
 // import { useNavigate } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { URL } from "../../App";
+import {Link} from "react-router-dom"
 
 
 
@@ -59,8 +60,9 @@ export default function Register() {
                     <input placeholder="Password" required  ref={password} className="loginInput" type="password" minLength="6" />
                     <input placeholder="Password Again" required ref={passwordAgain} type="password"  className="loginInput" minLength="6" />
                     <button className="loginButton" type="submit">Sign up</button>
-                   
+                   <Link to="/login">
                     <button className="loginRegisterButton">Join Account</button>
+                    </Link>
                 </form>
             </div>
         </div>

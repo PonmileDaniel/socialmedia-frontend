@@ -32,21 +32,21 @@ export default function Share() {
       const fileName = Date.now() + file.name;
       data.append("name", fileName);
       data.append("file",file)
-
+       
       //The name of the file 
    
       newPost.img = fileName;
       try {
         await axios.post(`${process.env.REACT_APP_SERVER_URL}/upload`, data);
       }catch(err){
-       
+       console.log(err)
       }
     }
     try{
      await axios.post(`${process.env.REACT_APP_SERVER_URL}/post`, newPost);
      window.location.reload();
     }catch(err){
-
+     console.log(err)
     }
   }
   return (

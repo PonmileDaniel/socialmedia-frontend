@@ -6,5 +6,8 @@
     .Rightbar{
         display: none;
     }
+    .Side{
+        display: none;
+    }
 
 }
